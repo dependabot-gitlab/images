@@ -1,0 +1,20 @@
+name: image-cleanup
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * *'
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clean up images
+        uses: snok/container-retention-policy@v2
+        with:
+          image-names: dependabot-gitlab, dependabot-gitlab-*
+          filter-tags: dev-*
+          org-name: dependabot-gitlab
+          account-type: org
+          cut-off: two hours ago UTC
+          token: ${{ secrets.CONTAINER_DELETE_TOKEN }}
