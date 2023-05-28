@@ -17,4 +17,5 @@ jobs:
           org-name: dependabot-gitlab
           account-type: org
           cut-off: two hours ago UTC
+          dry-run: true
           token: ${{ secrets.CONTAINER_DELETE_TOKEN }}
