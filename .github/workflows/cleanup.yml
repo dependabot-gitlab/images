@@ -19,4 +19,5 @@ jobs:
           cut-off: two hours ago UTC
           keep-at-least: 1
           dry-run: true
+          filter-include-untagged: false
           token: ${{ secrets.CONTAINER_DELETE_TOKEN }}
