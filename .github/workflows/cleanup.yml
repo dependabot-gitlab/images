@@ -18,5 +18,5 @@ jobs:
           account-type: org
           cut-off: 1 day ago UTC
           keep-at-least: 5
-          filter-include-untagged: false
+          filter-include-untagged: true
           token: ${{ secrets.CONTAINER_DELETE_TOKEN }}
