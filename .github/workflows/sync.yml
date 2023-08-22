@@ -1,0 +1,51 @@
+name: image-cleanup
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 0 * * *"
+
+jobs:
+  sync-core:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Update config file
+        env:
+          GHCR_CREDENTIALS: ${{ secrets.GHCR_CREDENTIALS }}
+        run: envsubst < .github/config.tmpl > .github/config.yaml
+      - name: Sync releases from Dockerhub to GitHub
+        run: docker run --rm -v .github/config.yaml:/config.yaml xelalex/dregsy -run=core
+  sync-ecosystems:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        ecosystem:
+          - bundler
+          - cargo
+          - composer
+          - docker
+          - elm
+          - gitsubmodule
+          - github-actions
+          - gomod
+          - gradle
+          - mix
+          - maven
+          - npm
+          - nuget
+          - pub
+          - pip
+          - terraform
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Update config file
+        env:
+          GHCR_CREDENTIALS: ${{ secrets.GHCR_CREDENTIALS }}
+          ECOSYSTEM: ${{ matrix.ecosystem }}
+        run: envsubst < .github/config.tmpl > .github/config.yaml
+      - name: Sync releases from Dockerhub to GitHub
+        run: docker run --rm -v .github/config.yaml:/config.yaml xelalex/dregsy -run=ecosystem
