@@ -34,7 +34,6 @@ jobs:
           - docker
           - elm
           - gitsubmodule
-          - github-actions
           - gomod
           - gradle
           - mix
