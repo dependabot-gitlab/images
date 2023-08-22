@@ -1,4 +1,4 @@
-name: image-cleanup
+name: release-sync
 
 on:
   workflow_dispatch:
