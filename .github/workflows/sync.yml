@@ -16,7 +16,8 @@ jobs:
           GHCR_CREDENTIALS: ${{ secrets.GHCR_CREDENTIALS }}
         run: envsubst < .github/config.tmpl > .github/config.yaml
       - name: Sync releases from Dockerhub to GitHub
-        run: docker run --rm -v .github/config.yaml:/config.yaml xelalex/dregsy -run=core
+        run: |
+          docker run --rm -v ${GITHUB_WORKSPACE}/.github/config.yaml:/config.yaml xelalex/dregsy -run=core
   sync-ecosystems:
     runs-on: ubuntu-latest
     strategy:
@@ -48,4 +49,5 @@ jobs:
           ECOSYSTEM: ${{ matrix.ecosystem }}
         run: envsubst < .github/config.tmpl > .github/config.yaml
       - name: Sync releases from Dockerhub to GitHub
-        run: docker run --rm -v .github/config.yaml:/config.yaml xelalex/dregsy -run=ecosystem
+        run: |
+          docker run --rm -v ${GITHUB_WORKSPACE}/.github/config.yaml:/config.yaml xelalex/dregsy -run=ecosystem
