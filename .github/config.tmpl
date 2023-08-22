@@ -2,9 +2,10 @@ relay: skopeo
 
 tasks:
   - name: core
-    source:
+    source: &source
       registry: docker.io
-    target:
+      auth: ${DOCKERHUB_CREDENTIALS}
+    target: &target
       registry: ghcr.io
       auth: ${GHCR_CREDENTIALS}
     mappings:
@@ -12,11 +13,8 @@ tasks:
         to: dependabot-gitlab/dependabot-gitlab
         platform: all
   - name: ecosystem
-    source:
-      registry: docker.io
-    target:
-      registry: ghcr.io
-      auth: ${GHCR_CREDENTIALS}
+    source: *source
+    target: *target
     mappings:
       - from: andrcuns/dependabot-gitlab-${ECOSYSTEM}
         to: dependabot-gitlab/dependabot-gitlab-${ECOSYSTEM}

@@ -14,6 +14,7 @@ jobs:
       - name: Update config file
         env:
           GHCR_CREDENTIALS: ${{ secrets.GHCR_CREDENTIALS }}
+          DOCKERHUB_CREDENTIALS: ${{ secrets.DOCKERHUB_CREDENTIALS }}
         run: envsubst < .github/config.tmpl > .github/config.yaml
       - name: Sync releases from Dockerhub to GitHub
         run: |
@@ -49,6 +50,7 @@ jobs:
       - name: Update config file
         env:
           GHCR_CREDENTIALS: ${{ secrets.GHCR_CREDENTIALS }}
+          DOCKERHUB_CREDENTIALS: ${{ secrets.DOCKERHUB_CREDENTIALS }}
           ECOSYSTEM: ${{ matrix.ecosystem }}
         run: envsubst < .github/config.tmpl > .github/config.yaml
       - name: Sync releases from Dockerhub to GitHub
